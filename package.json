@@ -1,14 +1,46 @@
 {
   "name": "node_js_okten",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "src/app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "rimraf dist && tsc-watch --onSuccess \"npm run watch:server\"",
+    "watch:server": "nodemon --exec ts-node src/app.ts",
+    "start": "node ./dist/app.js",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "prepare": "husky"
   },
   "author": "Yuliya Masechko",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.21.0"
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "joi": "^17.13.3",
+    "mongoose": "^8.6.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.11.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.5",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^15.9.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "nodemon": "^3.1.6",
+    "prettier": "^3.3.3",
+    "rimraf": "^5.0.10",
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^6.2.0",
+    "typescript-eslint": "^8.6.0"
+  },
+  "lint-staged": {
+    "{src,apps,libs,test}/**/*.ts": "eslint --fix"
   }
 }
