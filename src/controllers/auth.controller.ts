@@ -24,7 +24,7 @@ class AuthController {
       next(e);
     }
   }
-  // TODO add refresh token controller
+  //  add refresh token controller
   public async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const token = req.res.locals.refreshToken as string;

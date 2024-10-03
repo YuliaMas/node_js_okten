@@ -16,11 +16,11 @@ router.post(
 router.post(
   "/sign-in",
   // commonMiddleware.isBodyValid(UserValidator.signIn),
-  //Todo validation
+  //validation
   authController.signIn,
 );
 
-//TODO add refresh token route
+//add refresh token route
 router.post(
   "/refresh",
   authMiddleware.checkRefreshToken,

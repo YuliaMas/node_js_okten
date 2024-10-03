@@ -46,7 +46,7 @@ class AuthService {
     return { user, tokens };
   }
 
-  // TODO add refresh token service
+  // add refresh token service
   public async refresh(
     refreshToken: string,
     payload: ITokenPayload,
