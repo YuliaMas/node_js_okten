@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { ActionTokenTypeEnum } from "../enums/action-token-type.enum";
 import { TokenTypeEnum } from "../enums/token-type.enum";
 import { ApiError } from "../errors/api-error";
-import { IResetPasswordSet } from "../interfaces/user.interface";
+// import { IResetPasswordSet } from "../interfaces/user.interface";
 import { actionTokenRepository } from "../repositories/action-token.repository";
 import { tokenRepository } from "../repositories/token.repository";
 import { tokenService } from "../services/token.service";
@@ -65,29 +65,39 @@ class AuthMiddleware {
     }
   }
 
-  public async checkActionToken(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
-    try {
-      const { token } = req.body as IResetPasswordSet;
-      // tokenService.verifyActionToken
-      const payload = tokenService.verifyActionToken(
-        token,
-        ActionTokenTypeEnum.FORGOT_PASSWORD,
-        // TokenTypeEnum.ACCESS,
-      );
+  // public async checkActionToken(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction,
+  // ) {
+  //   try {
+  //     const { token } = req.body as IResetPasswordSet;
+  //     // tokenService.verifyActionToken
+  //     const payload = tokenService.verifyActionToken(
+  //       token,
+  //       ActionTokenTypeEnum.FORGOT_PASSWORD,
+  //       // TokenTypeEnum.ACCESS,
+  //     );
 
-      const tokenEntity = await actionTokenRepository.getByToken(token);
-      if (!tokenEntity) {
-        throw new ApiError("Token is not valid", 401);
+  public checkActionToken(type: ActionTokenTypeEnum) {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const token = req.body.token as string;
+        if (!token) {
+          throw new ApiError("Token is not provided", 401);
+        }
+        const payload = tokenService.verifyToken(token, type);
+
+        const tokenEntity = await actionTokenRepository.getByToken(token);
+        if (!tokenEntity) {
+          throw new ApiError("Token is not valid", 401);
+        }
+        req.res.locals.jwtPayload = payload;
+        next();
+      } catch (e) {
+        next(e);
       }
-      req.res.locals.jwtPayload = payload;
-      next();
-    } catch (e) {
-      next(e);
-    }
+    };
   }
 }
 
