@@ -46,6 +46,13 @@ router.put(
 );
 
 router.post(
+    "/change-password",
+    authMiddleware.checkAccessToken,
+    commonMiddleware.isBodyValid(UserValidator.changePassword),
+    authController.changePassword,
+);
+
+router.post(
   "/verify",
   authMiddleware.checkActionToken(ActionTokenTypeEnum.VERIFY_EMAIL),
   authController.verify,

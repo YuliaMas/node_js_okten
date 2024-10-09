@@ -25,6 +25,10 @@ class AuthMiddleware {
         TokenTypeEnum.ACCESS,
       );
 
+      // if (payload.role === "admin") {
+      //   next();
+      // }
+
       const pair = await tokenRepository.findByParams({ accessToken });
       if (!pair) {
         throw new ApiError("Token is not valid", 401);
