@@ -2,10 +2,10 @@ import express, { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 
 import { configs } from "./config/configs";
+import { cronRunner } from "./crons";
 import { ApiError } from "./errors/api-error";
 import { authRouter } from "./routers/auth.router";
 import { userRouter } from "./routers/user.router";
-import {cronRunner} from "./crons";
 
 const app = express();
 
