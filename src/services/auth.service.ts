@@ -171,13 +171,13 @@ class AuthService {
   }
 
   public async changePassword(
-      jwtPayload: ITokenPayload,
-      dto: IChangePassword,
+    jwtPayload: ITokenPayload,
+    dto: IChangePassword,
   ): Promise<void> {
     const user = await userRepository.getById(jwtPayload.userId);
     const isPasswordCorrect = await passwordService.comparePassword(
-        dto.oldPassword,
-        user.password,
+      dto.oldPassword,
+      user.password,
     );
     if (!isPasswordCorrect) {
       throw new ApiError("Invalid previous password", 401);
