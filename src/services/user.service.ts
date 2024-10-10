@@ -35,7 +35,7 @@ class UserService {
   }
 
   public async deleteMe(jwtPayload: ITokenPayload): Promise<void> {
-    return await userRepository.deleteById(jwtPayload.userId);
+    return   await userRepository.deleteById(jwtPayload.userId);
   }
 
   // public async updateMe(userId: string, dto: IUser): Promise<IUser> {
